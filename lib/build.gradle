@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 9
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "DISABLE_LOG", "false"
+            buildConfigField "boolean", "DEBUG_LOG", "false"
+        }
+
+        debug {
+            buildConfigField "boolean", "DISABLE_LOG", "false"
+            buildConfigField "boolean", "DEBUG_LOG", "true"
+        }
+    }
+
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-annotations:22.2.0'
+}

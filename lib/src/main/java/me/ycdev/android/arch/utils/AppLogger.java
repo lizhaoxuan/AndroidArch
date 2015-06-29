@@ -5,12 +5,14 @@ import android.util.Log;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import me.ycdev.android.arch.BuildConfig;
+
 /**
  * A wrapper class as logger.
  * <p>TODO To write custom lint rules to enforce only AppLogger used instead of android.util.Log.</p>
  */
 public class AppLogger {
-    public static final String  TAG = "SysMaster";
+    public static final String TAG = BuildConfig.LOG_TAG;
 
     private AppLogger() {
         // nothing to do

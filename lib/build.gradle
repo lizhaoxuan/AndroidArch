@@ -22,3 +22,29 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:support-annotations:22.2.0'
 }
+
+/*
+ * rules for including "lint.jar" in aar
+ */
+configurations {
+    lintJarImport
+}
+
+dependencies {
+    lintJarImport project(path: ":MyLintRules", configuration: "lintJarOutput")
+}
+
+task copyLintJar(type: Copy) {
+    from (configurations.lintJarImport) {
+        rename {
+            String fileName ->
+                'lint.jar'
+        }
+    }
+    into 'build/intermediates/lint/'
+}
+
+project.afterEvaluate {
+    def compileLintTask = project.tasks.find { it.name == 'compileLint' }
+    compileLintTask.dependsOn(copyLintJar)
+}

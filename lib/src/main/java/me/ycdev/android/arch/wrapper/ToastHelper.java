@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * TODO To write custom lint rules to enforce only ToastHelper used instead of Toast.
+ * A wrapper class for Toast so that we can customize and unify the UI in future.
  */
 public class ToastHelper {
     private ToastHelper() {

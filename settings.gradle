@@ -1,2 +1,2 @@
-include ':lib'
-include ':MyLintRules'
+include ':archLib'
+include ':archLintRules'

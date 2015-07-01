@@ -17,12 +17,12 @@ public class ToastHelper {
         }
     }
 
-    public static void toast(Context cxt, int msgResId, int duration) {
+    public static void show(Context cxt, int msgResId, int duration) {
         checkDuration(duration);
         Toast.makeText(cxt, msgResId, duration).show();
     }
 
-    public static void toast(Context cxt, CharSequence msg, int duration) {
+    public static void show(Context cxt, CharSequence msg, int duration) {
         checkDuration(duration);
         Toast.makeText(cxt, msg, duration).show();
     }

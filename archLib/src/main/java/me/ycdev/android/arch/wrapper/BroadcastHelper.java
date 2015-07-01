@@ -35,7 +35,15 @@ public class BroadcastHelper {
     /**
      * Send a broadcast to external receivers.
      */
+    public static void sendToExternal(Context cxt, Intent intent, String perm) {
+        cxt.sendBroadcast(intent, perm);
+    }
+
+    /**
+     * Send a broadcast to external receivers.
+     */
     public static void sendToExternal(Context cxt, Intent intent) {
         cxt.sendBroadcast(intent);
     }
+
 }

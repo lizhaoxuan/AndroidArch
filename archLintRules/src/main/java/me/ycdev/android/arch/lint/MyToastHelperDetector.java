@@ -8,47 +8,46 @@ import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.ast.MethodInvocation;
 import me.ycdev.android.arch.lint.base.WrapperDetectorBase;
 
-public class MyBroadcastHelperDetector extends WrapperDetectorBase {
+public class MyToastHelperDetector extends WrapperDetectorBase {
     public static final Issue ISSUE = Issue.create(
-            "MyBroadcastHelper",
-            "BroadcastHelper should be used.",
-            "Please use the wrapper class 'BroadcastHelper' to register broadcast receivers"
-                    + " and send broadcasts to avoid security issues.",
+            "MyToastHelper",
+            "ToastHelper should be used.",
+            "Please use the wrapper class 'ToastHelper' to show toast."
+                    + " So that we can customize and unify the UI in future.",
             Category.CORRECTNESS, 5, Severity.ERROR,
-            new Implementation(MyBroadcastHelperDetector.class, Scope.JAVA_FILE_SCOPE));
+            new Implementation(MyToastHelperDetector.class, Scope.JAVA_FILE_SCOPE));
 
-    /** Constructs a new {@link MyBroadcastHelperDetector} check */
-    public MyBroadcastHelperDetector() {
+    /** Constructs a new {@link MyToastHelperDetector} check */
+    public MyToastHelperDetector() {
         super();
     }
 
     @Override
     protected String getWrapperClassName() {
-        return "BroadcastHelper";
+        return "ToastHelper";
     }
 
     @Override
     protected String[] getTargetClassFullNames() {
         return new String[] {
-                "android.content.Context"
+                "android.widget.Toast"
         };
     }
 
     @Override
     public List<String> getApplicableMethodNames() {
-        return Arrays.asList(
-                "registerReceiver",
-                "sendBroadcast");
+        return Collections.singletonList("makeText");
     }
 
     @Override
     protected void reportViolation(JavaContext context, MethodInvocation node) {
         context.report(ISSUE, node, context.getLocation(node),
-                "Please use the wrapper class 'BroadcastHelper'");
+                "Please use the wrapper class 'ToastHelper'.");
     }
 }

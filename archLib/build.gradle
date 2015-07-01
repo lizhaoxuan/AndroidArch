@@ -31,7 +31,7 @@ configurations {
 }
 
 dependencies {
-    lintJarImport project(path: ":MyLintRules", configuration: "lintJarOutput")
+    lintJarImport project(path: ":archLintRules", configuration: "lintJarOutput")
 }
 
 task copyLintJar(type: Copy) {

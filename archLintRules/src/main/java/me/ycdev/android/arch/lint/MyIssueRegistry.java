@@ -9,7 +9,10 @@ import java.util.List;
 public class MyIssueRegistry extends IssueRegistry {
     @Override
     public List<Issue> getIssues() {
-        return Arrays.asList(MyToastHelperDetector.ISSUE,
-                MyBroadcastHelperDetector.ISSUE);
+        return Arrays.asList(
+                MyToastHelperDetector.ISSUE,
+                MyBroadcastHelperDetector.ISSUE,
+                MyBaseActivityDetector.ISSUE
+        );
     }
 }

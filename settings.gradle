@@ -1,3 +1,4 @@
 include ':archLib'
 include ':archLintRules'
+include ':archLintRulesAAR'
 include ':demo'

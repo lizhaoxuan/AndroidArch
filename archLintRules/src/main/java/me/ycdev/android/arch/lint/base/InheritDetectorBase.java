@@ -31,9 +31,16 @@ public abstract class InheritDetectorBase extends Detector implements Detector.J
     @Override
     public void checkClass(@NonNull JavaContext context, @Nullable ClassDeclaration declaration,
             @NonNull Node node, @NonNull JavaParser.ResolvedClass resolvedClass) {
+        String className = resolvedClass.getName();
+        if (mWrapperClasses.contains(className)) {
+            return; // ignore the wrapper classes
+        }
+
         String superClassName = resolvedClass.getSuperClass().getName();
         if (!mWrapperClasses.contains(superClassName)) {
-            reportViolation(context, node);
+            Node locationNode = node instanceof ClassDeclaration
+                    ? ((ClassDeclaration) node).astName() : node;
+            reportViolation(context, locationNode);
         }
     }
 

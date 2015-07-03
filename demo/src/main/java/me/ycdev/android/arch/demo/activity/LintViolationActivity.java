@@ -7,6 +7,9 @@ import android.view.MenuItem;
 
 import me.ycdev.android.arch.demo.R;
 
+/**
+ * Class doc for test
+ */
 public class LintViolationActivity extends AppCompatActivity { // lint violation
     @Override
     protected void onCreate(Bundle savedInstanceState) {

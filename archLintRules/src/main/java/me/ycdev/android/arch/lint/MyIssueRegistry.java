@@ -13,7 +13,8 @@ public class MyIssueRegistry extends IssueRegistry {
         return Arrays.asList(
                 MyToastHelperDetector.ISSUE,
                 MyBroadcastHelperDetector.ISSUE,
-                MyBaseActivityDetector.ISSUE
+                MyBaseActivityDetector.ISSUE,
+                MyIntentHelperDetector.ISSUE
         );
     }
 }

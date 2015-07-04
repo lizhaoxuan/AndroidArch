@@ -16,7 +16,7 @@ import me.ycdev.android.arch.lint.base.InheritDetectorBase;
 
 public class MyBaseActivityDetector extends InheritDetectorBase {
     public static final Issue ISSUE = Issue.create(
-            "BaseActivity",
+            "MyBaseActivity",
             "Base classes for Activity should be used.",
             "Please use the base classes for Activity."
                     + " So that we can do some unified behaviors.",

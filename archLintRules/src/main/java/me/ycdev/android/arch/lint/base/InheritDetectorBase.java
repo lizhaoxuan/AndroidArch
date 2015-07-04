@@ -15,10 +15,12 @@ import lombok.ast.Node;
 
 public abstract class InheritDetectorBase extends Detector implements Detector.JavaScanner {
     protected HashSet<String> mWrapperClasses;
+    protected HashSet<String> mTargetClasses;
 
     /** Constructs a new {@link InheritDetectorBase} check */
     public InheritDetectorBase() {
         mWrapperClasses = getWrapperClasses();
+        mTargetClasses = new HashSet<>(applicableSuperClasses());
     }
 
     protected abstract HashSet<String> getWrapperClasses();
@@ -36,11 +38,17 @@ public abstract class InheritDetectorBase extends Detector implements Detector.J
             return; // ignore the wrapper classes
         }
 
-        String superClassName = resolvedClass.getSuperClass().getName();
-        if (!mWrapperClasses.contains(superClassName)) {
-            Node locationNode = node instanceof ClassDeclaration
-                    ? ((ClassDeclaration) node).astName() : node;
-            reportViolation(context, locationNode);
+        JavaParser.ResolvedClass superClass = resolvedClass.getSuperClass();
+        String superClassName = superClass.getName();
+        while (!mWrapperClasses.contains(superClassName)) {
+            if (mTargetClasses.contains(superClassName)) {
+                Node locationNode = node instanceof ClassDeclaration
+                        ? ((ClassDeclaration) node).astName() : node;
+                reportViolation(context, locationNode);
+                break;
+            }
+            superClass = superClass.getSuperClass();
+            superClassName = superClass.getName();
         }
     }
 

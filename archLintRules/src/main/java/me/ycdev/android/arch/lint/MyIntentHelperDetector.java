@@ -24,11 +24,11 @@ public class MyIntentHelperDetector extends WrapperDetectorBase {
 
     @Override
     protected String getWrapperClassName() {
-        return "IntentHelper";
+        return "me.ycdev.android.arch.wrapper.IntentHelper";
     }
 
     @Override
-    protected String[] getTargetClassFullNames() {
+    protected String[] getTargetClassNames() {
         return new String[] {
                 "android.content.Intent"
         };

@@ -30,11 +30,11 @@ public class MyToastHelperDetector extends WrapperDetectorBase {
 
     @Override
     protected String getWrapperClassName() {
-        return "ToastHelper";
+        return "me.ycdev.android.arch.wrapper.ToastHelper";
     }
 
     @Override
-    protected String[] getTargetClassFullNames() {
+    protected String[] getTargetClassNames() {
         return new String[] {
                 "android.widget.Toast"
         };

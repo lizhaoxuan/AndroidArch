@@ -29,11 +29,11 @@ public class MyBroadcastHelperDetector extends WrapperDetectorBase {
 
     @Override
     protected String getWrapperClassName() {
-        return "BroadcastHelper";
+        return "me.ycdev.android.arch.wrapper.BroadcastHelper";
     }
 
     @Override
-    protected String[] getTargetClassFullNames() {
+    protected String[] getTargetClassNames() {
         return new String[] {
                 "android.content.Context"
         };

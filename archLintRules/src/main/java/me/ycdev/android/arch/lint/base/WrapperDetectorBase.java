@@ -12,19 +12,19 @@ import lombok.ast.MethodInvocation;
 
 public abstract class WrapperDetectorBase extends Detector implements Detector.JavaScanner {
     protected String mWrapperClassName;
-    protected String[] mTargetClassFullNames;
+    protected String[] mTargetClassNames;
 
     /** Constructs a new {@link WrapperDetectorBase} check */
     public WrapperDetectorBase() {
         mWrapperClassName = getWrapperClassName();
-        mTargetClassFullNames = getTargetClassFullNames();
+        mTargetClassNames = getTargetClassNames();
     }
 
     // ---- Implements JavaScanner ----
 
     protected abstract String getWrapperClassName();
 
-    protected abstract String[] getTargetClassFullNames();
+    protected abstract String[] getTargetClassNames();
 
     protected abstract void reportViolation(JavaContext context, MethodInvocation node);
 
@@ -33,16 +33,7 @@ public abstract class WrapperDetectorBase extends Detector implements Detector.J
 
     @Override
     public void visitMethod(JavaContext context, AstVisitor visitor, MethodInvocation node) {
-        if (node.astOperand() == null) {
-            return;
-        }
-
-        String operand = node.astOperand().toString();
-        if (operand.endsWith(mWrapperClassName)) {
-            return;
-        }
-
-        if (isInvokedInWrapperClass(node)) {
+        if (isInvokedInWrapperClass(context, node)) {
             return;
         }
 
@@ -51,28 +42,27 @@ public abstract class WrapperDetectorBase extends Detector implements Detector.J
         }
     }
 
+    private boolean isInvokedInWrapperClass(JavaContext context, MethodInvocation node) {
+        ClassDeclaration surroundingClassDecl = JavaContext.findSurroundingClass(node);
+        JavaParser.ResolvedClass surroundingClass = (JavaParser.ResolvedClass)
+                context.resolve(surroundingClassDecl);
+        String surroundingClassName = surroundingClass.getName();
+        return mWrapperClassName.equals(surroundingClassName);
+    }
+
     private boolean checkRuleViolation(JavaContext context, MethodInvocation node) {
-        JavaParser.ResolvedNode resolved = context.resolve(node);
-        if (resolved instanceof JavaParser.ResolvedMethod) {
-            JavaParser.ResolvedMethod method = (JavaParser.ResolvedMethod) resolved;
-            JavaParser.ResolvedClass containingClass = method.getContainingClass();
-            String fullClassName = containingClass.getName();
-            for (String targetClassName : mTargetClassFullNames) {
-                if (targetClassName.equals(fullClassName)) {
-                    return true;
-                }
-                if (containingClass.isSubclassOf(targetClassName, false)) {
-                    return true;
-                }
+        JavaParser.ResolvedMethod method = (JavaParser.ResolvedMethod) context.resolve(node);
+        JavaParser.ResolvedClass containingClass = method.getContainingClass();
+        String containingClassName = containingClass.getName();
+        for (String targetClassName : mTargetClassNames) {
+            if (targetClassName.equals(containingClassName)) {
+                return true;
             }
-            return false;
+            if (containingClass.isSubclassOf(targetClassName, false)) {
+                return true;
+            }
         }
         return false;
     }
 
-    private boolean isInvokedInWrapperClass(MethodInvocation node) {
-        ClassDeclaration surroundingClass = JavaContext.findSurroundingClass(node);
-        String className = surroundingClass.astName().astValue();
-        return mWrapperClassName.equals(className);
-    }
 }

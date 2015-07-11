@@ -54,6 +54,10 @@ public abstract class WrapperDetectorBase extends Detector implements Detector.J
         JavaParser.ResolvedMethod method = (JavaParser.ResolvedMethod) context.resolve(node);
         JavaParser.ResolvedClass containingClass = method.getContainingClass();
         String containingClassName = containingClass.getName();
+        if (mWrapperClassName.equals(containingClassName)) {
+            return false;
+        }
+
         for (String targetClassName : mTargetClassNames) {
             if (targetClassName.equals(containingClassName)) {
                 return true;

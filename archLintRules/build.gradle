@@ -1,17 +1,10 @@
 apply plugin: 'java'
 
-repositories {
-    // workaround for the bug: https://code.google.com/p/android/issues/detail?id=175161
-    maven {
-        url 'https://dl.bintray.com/android/android-tools'
-    }
-}
-
 dependencies {
-    compile 'com.android.tools.lint:lint-api:24.3.0'
-    compile 'com.android.tools.lint:lint-checks:24.3.0'
+    compile 'com.android.tools.lint:lint-api:24.3.1'
+    compile 'com.android.tools.lint:lint-checks:24.3.1'
 
-    testCompile 'com.android.tools.lint:lint-tests:24.3.0'
+    testCompile 'com.android.tools.lint:lint-tests:24.3.1'
 }
 
 jar {
